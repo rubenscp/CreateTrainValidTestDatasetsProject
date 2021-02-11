@@ -320,8 +320,10 @@ def saveProcessingResults(trainValidTestDatasetsPath, specificDestinationFolder,
 # Main method
 # ###########################################
 if __name__ == '__main__':
-    CROPPED_BOUNDING_BOXES_DATABASE_PATH = 'E:/desenvolvimento/projetos/DoctoralProjects/CreateTrainValidTestDatasetsProjectImages/Block 20/20.2 White Fly Cropped Images by Classes/'
-    OUTPUT_TRAIN_VALID_TEST_DATASET_PATH = 'E:/desenvolvimento/projetos/DoctoralProjects/CreateTrainValidTestDatasetsProjectImages/Block 20/20.3 White Fly Cropped Images by Train-Valid-Test/'
+    CROPPED_BOUNDING_BOXES_DATABASE_PATH = \
+        'E:/desenvolvimento/projetos/DoctoralProjects/CreateTrainValidTestDatasetsProjectImages/Block 20/20.2 White Fly Cropped Images by Classes/'
+    OUTPUT_TRAIN_VALID_TEST_DATASET_PATH = \
+        'E:/desenvolvimento/projetos/DoctoralProjects/CreateTrainValidTestDatasetsProjectImages/Block 20/20.3 White Fly Cropped Images by Train-Valid-Test/'
 
     print('Cropping Annotated Bounding Boxes')
     print('---------------------------------')
