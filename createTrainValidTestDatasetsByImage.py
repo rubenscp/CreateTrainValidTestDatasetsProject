@@ -7,23 +7,13 @@ Version: 1.0.0
 """
 
 # Importing needed libraries
-
 import os
 import pathlib
 import shutil
 from random import randrange
 import glob
 import fnmatch
-
-# from re import _expand
-
-# import cv2
-
-# from Entity.BoundingBox import BoundingBox
-# from Entity.Image import Image
-# from Entity.Pixel import Pixel
-# from Entity.GroundTruthData import GroundTruthData
-# from Entity.DetectedObject import DetectedObject
+from datetime import datetime
 
 # ###########################################
 # Constants
@@ -75,6 +65,14 @@ def processImages(croppedImagesPath, trainValidTestDatasetsPath,
                               percentageOfTrainImages, percentageOfValidImages, percentageOfTestImages,
                               'ovo')
 
+    organizeImagesByClassName(croppedImagesPath, trainValidTestDatasetsPath,
+                              percentageOfTrainImages, percentageOfValidImages, percentageOfTestImages,
+                              'instar1ou2')
+
+    organizeImagesByClassName(croppedImagesPath, trainValidTestDatasetsPath,
+                              percentageOfTrainImages, percentageOfValidImages, percentageOfTestImages,
+                              'instar3ou4')
+
     # defining counters
     # totalOfImages = 0
     # totalOfBoundingBoxes = 0
@@ -86,22 +84,22 @@ def processImages(croppedImagesPath, trainValidTestDatasetsPath,
     # totalOfAdultaBoundingBoxesImages = 0
     # totalOfOvoBoundingBoxesImages = 0
 
+    # calculating statistics
+    # get the total number of images by class
+    numberOfTrainImages = len(list(pathlib.Path(trainValidTestDatasetsPath + 'train/').glob('*.jpg')))
+    numberOfValidImages = len(list(pathlib.Path(trainValidTestDatasetsPath + 'valid/').glob('*.jpg')))
+    numberOfTestImages = len(list(pathlib.Path(trainValidTestDatasetsPath + 'test/').glob('*.jpg')))
+    totalOfImages = numberOfTrainImages + numberOfValidImages + numberOfTestImages
+
     # printing statistics
-    # print('')
-    # print('Estatísticas do Processamento:')
-    # print('------------------------------')
-    # print('Total de imagens             : ', totalOfImages)
-    # print('Total de bounding boxes      : ', totalOfBoundingBoxes)
-    # print('Total de imagens de exuvia   : ', totalOfExuviaBoundingBoxesImages)
-    # print('Total de imagens de instar1  : ', totalOfInstar1BoundingBoxesImages)
-    # print('Total de imagens de instar2  : ', totalOfInstar2BoundingBoxesImages)
-    # print('Total de imagens de instar3  : ', totalOfInstar3BoundingBoxesImages)
-    # print('Total de imagens de instar4  : ', totalOfInstar4BoundingBoxesImages)
-    # print('Total de imagens de adultas  : ', totalOfAdultaBoundingBoxesImages)
-    # print('Total de imagens de ovo      : ', totalOfOvoBoundingBoxesImages)
-    # print('Máximo Height                : ', sizeSquareImage)
-    # print('Máximo Width                 : ', sizeSquareImage)
-    # print('')
+    print('')
+    print('Processing Statistics by Image:')
+    print('-------------------------------')
+    print('Date:', datetime.now())
+    print('Total of train images : ', numberOfTrainImages)
+    print('Total of valid images : ', numberOfValidImages)
+    print('Total of test images  : ', numberOfTestImages)
+    print('Total of images       : ', totalOfImages)
 
 
 # ###########################################
@@ -320,16 +318,21 @@ def saveProcessingResults(trainValidTestDatasetsPath, specificDestinationFolder,
 # Main method
 # ###########################################
 if __name__ == '__main__':
-    CROPPED_BOUNDING_BOXES_DATABASE_PATH = \
-        'E:/desenvolvimento/projetos/DoctoralProjects/CreateTrainValidTestDatasetsProjectImages/Block 20/20.2 White Fly Cropped Images by Classes/'
-    OUTPUT_TRAIN_VALID_TEST_DATASET_PATH = \
-        'E:/desenvolvimento/projetos/DoctoralProjects/CreateTrainValidTestDatasetsProjectImages/Block 20/20.3 White Fly Cropped Images by Train-Valid-Test/'
+    # INPUT_CROPPED_BOUNDING_BOXES_DATABASE_PATH = \
+    #     'E:/desenvolvimento/projetos/DoctoralProjects/CreateTrainValidTestDatasetsProjectImages/Block 30/30.2 White Fly Cropped Images by Classes/'
+    # OUTPUT_TRAIN_VALID_TEST_DATASET_PATH = \
+    #     'E:/desenvolvimento/projetos/DoctoralProjects/CreateTrainValidTestDatasetsProjectImages/Block 30/30.3 White Fly Cropped Images by Train-Valid-Test/'
 
-    print('Cropping Annotated Bounding Boxes')
+    INPUT_CROPPED_BOUNDING_BOXES_DATABASE_PATH = \
+        'E:/desenvolvimento/projetos/DoctoralProjects/WhiteFlyExperiment/01.06 - Training - Cropped Images by Classes (128x128 pixels)/'
+    OUTPUT_TRAIN_VALID_TEST_DATASET_PATH = \
+        'E:/desenvolvimento/projetos/DoctoralProjects/WhiteFlyExperiment/01.07 - Training - Train-Valid-Test Cropped Images (128x128 pixels)/'
+
+    print('Organize cropped images into train, valid and test folders')
     print('---------------------------------')
     print('')
-    print('Input images path - Cropped images path  : ', CROPPED_BOUNDING_BOXES_DATABASE_PATH)
-    print('Output images path                       : ', OUTPUT_TRAIN_VALID_TEST_DATASET_PATH)
+    print('Input images path  : ', INPUT_CROPPED_BOUNDING_BOXES_DATABASE_PATH)
+    print('Output images path : ', OUTPUT_TRAIN_VALID_TEST_DATASET_PATH)
     print('')
 
     # setting the percentual of each dataset
@@ -338,8 +341,9 @@ if __name__ == '__main__':
     percentageOfTestImages = 10
 
     # processing the annotated images
-    processImages(CROPPED_BOUNDING_BOXES_DATABASE_PATH, OUTPUT_TRAIN_VALID_TEST_DATASET_PATH,
+    processImages(INPUT_CROPPED_BOUNDING_BOXES_DATABASE_PATH, OUTPUT_TRAIN_VALID_TEST_DATASET_PATH,
                   percentageOfTrainImages, percentageOfValidImages, percentageOfTestImages)
 
     # end of processing
+    print()
     print('End of processing')
